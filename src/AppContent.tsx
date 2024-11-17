@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ShoppingBag, Search, Menu, X, ShoppingCart, User, LogOut } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import DashboardPage from '@/components/DashboardPage';
 import HomePage from '@/components/HomePage';
 import ProductListing from '@/components/ProductListing';

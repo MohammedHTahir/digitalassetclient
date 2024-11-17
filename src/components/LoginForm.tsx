@@ -11,12 +11,13 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    console.log('=== LOGIN FORM SUBMISSION START ===');
-    console.log('Form values:', { email, password });
-    
-    
-    console.log('=== LOGIN FORM SUBMISSION END ===');
+    try {
+      console.log('Attempting login...');
+      const response = await login(email, password);
+      console.log('Login response:', response);
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
 
   // Add onChange logging

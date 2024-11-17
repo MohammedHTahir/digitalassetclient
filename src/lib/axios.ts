@@ -1,23 +1,27 @@
+// src/lib/axios.ts
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-  transformRequest: [(data) => {
-    // Debug point 5: Log data before axios sends it
-    console.log('Axios transformRequest:', data);
-    return JSON.stringify(data);
-  }]
+  withCredentials: true
 });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
+  
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
+    console.log('Setting Authorization header:', `Bearer ${token}`);
   }
+
+  // Log the full request config
+  console.log('Full request config:', {
+    url: config.url,
+    method: config.method,
+    headers: config.headers,
+    data: config.data
+  });
+
   return config;
 });
 
@@ -26,7 +30,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
-      window.location.href = '/login';
     }
     return Promise.reject(error);
   }

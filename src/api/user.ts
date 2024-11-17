@@ -1,17 +1,12 @@
+// src/api/user.ts
 import api from "@/lib/axios";
 import { User } from "@/types/user";
 
-export interface ProfileResponse {
-  username: string;
-  role: string;
-  avatarUrl: string;
-  bio: string;
-}
-
 export const userApi = {
-  getProfile: async (): Promise<ProfileResponse> => {
+  getProfile: async (): Promise<User> => {
     try {
-      const response = await api.get<ProfileResponse>('/User/profile');
+      const response = await api.get<User>('/User/profile');
+      console.log('Profile response:', response.data);
       return response.data;
     } catch (error: any) {
       console.error('API Error:', error.response?.data);
@@ -19,18 +14,18 @@ export const userApi = {
     }
   },
 
-  updateProfile: async (data: FormData): Promise<ProfileResponse> => {
+  updateProfile: async (data: FormData): Promise<User> => {
     try {
-      const response = await api.put<ProfileResponse>('/User/profile', data, {
-        headers: {
-          'Accept': '*/*',
-          'Content-Type': 'multipart/form-data',
-        },
-        transformRequest: [(data) => data],
-      });
+      // Debug log the FormData contents
+      console.log('Sending FormData:');
+      for (let pair of data.entries()) {
+        console.log('- ', pair[0], '=', pair[1]);
+      }
+
+      const response = await api.put<User>('/User/profile', data);
       return response.data;
     } catch (error: any) {
-      console.error('API Error:', error.response?.data);
+      console.error('Full error response:', error.response?.data);
       throw error;
     }
   },

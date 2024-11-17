@@ -14,6 +14,7 @@ interface RegisterCredentials {
 
 export const authService = {
   async login(credentials: LoginCredentials) {
+    console.log('Sending login request...');
     const response = await api.post('/auth/login', credentials);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);

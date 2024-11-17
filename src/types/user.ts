@@ -1,6 +1,14 @@
 export interface User {
+  id: string;
+  email: string;
   username: string;
   role: string;
-  avatarUrl: string;
-  bio: string;
-} 
+  bio?: string;
+  avatarUrl?: string;
+}
+
+export interface UpdateProfileRequest {
+  username?: string;
+  bio?: string;
+  Avatar?: File;
+}
